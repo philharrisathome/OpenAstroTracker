@@ -141,7 +141,8 @@ void setup() {
   #endif
   // end microstepping -------------------
 
-  Serial.begin(57600);
+  Serial.begin(SERIAL_BAUDRATE);
+
   #ifdef BLUETOOTH_ENABLED 
   BLUETOOTH_SERIAL.begin("OpenAstroTracker");
   #endif
@@ -161,6 +162,7 @@ void setup() {
     lcdMenu.printMenu("OpenAstroTracker");
     lcdMenu.setCursor(5, 1);
     lcdMenu.printMenu(VERSION);
+    delay(1000);  
 
     // Check for EEPROM reset (Button down during boot)
     if (lcdButtons.currentState() == btnDOWN){
@@ -198,8 +200,8 @@ void setup() {
       lcdMenu.addItem("INFO", Status_Menu);
     #endif
 
-    LOGV1(DEBUG_ANY, F("Update display..."));
-    lcdMenu.updateDisplay();
+    // LOGV1(DEBUG_ANY, F("Update display..."));
+    // lcdMenu.updateDisplay();
   #endif // DISPLAY_TYPE > 0
   
   LOGV2(DEBUG_ANY, F("Hardware: %s"), mount.getMountHardwareInfo().c_str());
@@ -215,7 +217,7 @@ void setup() {
 
   // Configure the mount
   // Delay for a while to get UARTs booted...
-  delay(1000);  
+  // delay(1000);  
 
   // Set the stepper motor parameters
   #if RA_STEPPER_TYPE == STEPPER_TYPE_28BYJ48 
